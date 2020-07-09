@@ -9,6 +9,16 @@ h1 {
   unicode-range: U+30-39;
 }
 
+.logo {
+  margin: -10px 0;
+  height: 60px;
+  overflow: hidden;
+}
+
+.logo img {
+  height: 120px;
+}
+
 #hero-btns button {
   width: 100%;
   border-width: 4px;
