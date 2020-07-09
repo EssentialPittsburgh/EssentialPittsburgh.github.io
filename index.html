@@ -1,0 +1,380 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="robots" content="noindex" />
+		<title>Essential Pittsburgh Mental Health Network</title>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150391163-1"></script>
+		<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag() { dataLayer.push(arguments); }
+				gtag('js', new Date());
+
+				gtag('config', 'UA-150391163-1');
+		</script>
+
+		<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+		<!-- Font Awesome icons (free version)-->
+		<script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+		<!-- Google fonts-->
+		<link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+		<!-- Third party plugin CSS-->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+		<!-- Core theme CSS (includes Bootstrap)-->
+		<link href="css/styles.css" rel="stylesheet" />
+		<link href="css/custom.css" rel="stylesheet" />
+
+	</head>
+
+
+	<div class="container">
+	 
+		<script>
+
+			/*
+				This (messy) function parses HTML from the public page of google spreadsheet (Which is roughly in spare format) 
+				into a spreadsheet array with appropriate empty cells (which requires filling in gaps).
+
+				NOTE this function currently makes assumptions such as:
+				- Every row must have data 
+				- Every row must have one unit of data on the last column
+				- The data is in the shape of a columns x rows rectangle of some sort
+			*/
+
+			function parseHTMLData(data) {
+					// Final results will be stored here  
+					var results = [];
+
+					// Get all entries from spreadsheet
+					var entries = data.feed.entry;
+
+
+					//find max col number
+					max_row = 0;
+					max_col = 0;
+
+
+					for (var i = 1; i < entries.length; i++) {
+
+						var cell = entries[i];
+
+						var row = parseInt(cell.gs$cell.row);
+						var col = parseInt(cell.gs$cell.col);
+
+						if (row>max_row){
+							max_row = row;
+						}
+
+						if (col>max_col){
+							max_col = col;
+						}
+					} 
+
+					//find max row number
+
+					//unknown test by trying, +1 for fix, +1 for switch to 1 indexing on cell text
+					var modified_max_col = max_col + 2;
+					
+
+					// Set initial previous row, so we can check if the data in the current cell is from a new row
+					var previousRow = 0;
+					var col_index = 1;
+					// Iterate all entries in the spreadsheet
+					for (var i = 0; i < entries.length; i++) {
+							// check what was the latest row we added to our result array, then load it to local variable
+							var latestRow = results[results.length - 1];
+
+							// get current cell
+							var cell = entries[i];
+
+							// get text from current cell
+							var text = cell.content.$t;
+
+							// get the current row
+							var row = cell.gs$cell.row;
+							var col = parseInt(cell.gs$cell.col);
+							
+
+							// All of this assumes we won't need to do the fill in on the first column, which by making sure our last column is always full we can avoid. Can be fixed 
+
+							// Determine if the current cell is in the latestRow or is a new row
+							if (row > previousRow) {
+									// this is a new row, create new array for this row
+									var newRow = [];
+
+									// add the cell text to this new row array  
+									newRow.push(text);
+
+									// store the new row array in the final results array
+									results.push(newRow);
+
+									// Increment the previous row, since we added a new row to the final results array
+									previousRow++;
+
+									//NEW reset row index;
+
+									// Strange and is done to pair with code flow / how subarrays are formed.
+									col_index = 2;
+							} else {
+									// This cell is in an existing row we already added to the results array, add text to this existing row
+
+
+									// We walk through everything sequentially
+									// Two cases, either we are at the correct index and we add the text and increment
+									if(col == col_index){
+										latestRow.push(text);
+										col_index++;
+									}
+									// Or we read something surprising, realize we need to 'catch' up with nulls, catch up while incrementing, then insert and +1. Note this is not the new 'row' surprising case.
+									else{
+
+										var difference = col-col_index+1;
+										for(var y = 0; y<(difference-1);y++){
+
+											latestRow.push(null);
+
+											col_index+=1;
+										}
+										latestRow.push(text);
+										col_index+=1;
+									}
+							}
+
+					}
+					// This is done this way to fix an async issue. Results are passed off for handling here to ensure everything is loaded.
+					handleResults(results);
+			}
+
+
+			// Parses header row and sets up reverse index for columns
+			function parseHeaderRow(spreadsheetArray){
+				spreadsheetDataColumns = spreadsheetArray[0];
+				// Create the reverse index
+				for (var i=0; i<spreadsheetDataColumns.length; i++){
+					spreadsheetDataColumnsReverseIndex[spreadsheetDataColumns[i]] = i;
+				}
+			}
+
+
+			/* 
+				Loops through all cells of a specific column.
+			*/
+			function loopThroughColumn(spreadsheetArray, columnName){
+
+				var allValuesFromColumn = [];
+				var columnIdx = spreadsheetDataColumnsReverseIndex[columnName];
+
+				// i starts at 1 to skip header row
+				for (var i=1; i<spreadsheetArray.length; i++){
+					var cellValue = spreadsheetArray[i][columnIdx];
+					allValuesFromColumn.push(cellValue);
+				}
+
+				//Doing something with them
+				console.log(allValuesFromColumn);
+			}
+
+
+
+			/*
+				Loops through parsed spreadSheetArray row by row.
+			*/
+			function loopThroughRows(spreadsheetArray){
+				// row_idx starts at 1 to skip header row
+				for (var row_idx=1; row_idx<max_row; row_idx++){
+					var row_data = spreadsheetArray[row_idx];
+					
+					/*
+						Easiest way to access data
+						let columnName = 'whatever name';
+						let cellData = row_data[spreadsheetDataColumnsReverseIndex[columnName]];
+					*/
+
+				}
+			}
+			
+			/*
+				This function executes after data is loaded.
+			*/
+			function handleResults(spreadsheetArray) {
+
+					// Need to parse headers
+					parseHeaderRow(spreadsheetArray);
+					loopThroughColumn(spreadsheetArray, 'Name' );
+					/*
+						Sample functions to call
+					loopThroughRows(spreadsheetArray);
+					console.log(spreadsheetDataColumns);
+					console.log(spreadsheetDataColumnsReverseIndex);
+					*/
+
+			}
+
+			/*
+				Function to load google sheets json.
+				Note on how this works:
+					- The parseHTMLData function is created with data as a parameter
+					- The name of the function (parseHTMLData) is passed in the GET call
+					- (From my understanding) the function is passed as json?
+					- It works!
+			*/
+			function load_google_sheets_json(sheet_key){
+				let callbackName = "parseHTMLData";
+				var spreadsheetUrl = "https://spreadsheets.google.com/feeds/cells/" + sheet_key + "/1/public/values?alt=json-in-script&callback=" + callbackName;
+				$.ajax({
+						url: spreadsheetUrl,
+						jsonp: 'jsonp',
+						dataType: 'jsonp'
+				});
+			}
+
+			// Initialization of column names and a reverse index for finding indexes by name 
+			var spreadsheetDataColumns = [];
+			var spreadsheetDataColumnsReverseIndex = {};
+			// Load data from Google Spreadsheet key from url
+			var sheet_key = "1-hOEGaLhBmvqnuMd9OE4J6QfiQLnxwQBhKavMIl8jHg";
+			load_google_sheets_json(sheet_key);
+
+
+		</script>
+	</div>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 bg-white" id="mainNav">
+			<div class="container">
+				<a class="navbar-brand js-scroll-trigger" href="#page-top">Essential Pittsburgh Mental Health Network</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto my-2 my-lg-0">
+						<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#eligibility">Eligibility</a></li>
+						<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
+						<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+						<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<header class="masthead">
+			<div class="container h-100">
+				<div class="row h-100 align-items-center justify-content-center text-center">
+					<div class="col-lg-10 align-self-end">
+						<h1 class="text-white font-weight-bold">Free Mental Healthcare Services for COVID-19 Frontline Workers</h1>
+						<hr class="divider light my-4" />
+					</div>
+					<div class="col-lg-8 align-self-baseline">
+						<p class="text-white-75 font-weight-light mb-5">The Pittsburgh mental health community stands in solidarity with those on the frontlines of the COVID-19 outbreak. This site lists licensed mental healthcare specialists who have volunteered to offer 1-4 free sessions of phone or video teletherapy! </p>
+						<div class="btn-group btn-group-lg" role="group" id="hero-btns">
+							<button type="button" class="btn btn-primary mx-1 align-middle" onclick="location.href = './providers.html';">I'd like to speak to someone.</button>
+							<button type="button" class="btn btn-primary mx-1" onclick="location.href = './give.html';">I'm a mental healthcare provider and I'd like to help.</button>
+						</div>
+<!--             <p class="text-white-75 font-weight-light mb-5">If you are a provider and you would like to be added to this list, please fill out this form as best you can and the team will reach out shortly.</p> -->
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="page-section bg-primary" id="eligibility">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 text-center">
+						<h2 class="text-white mt-0">Eligibility</h2>
+						<hr class="divider light my-4" />
+						<p class="text-white-75 mb-4">Anyone who works at a job that involves directly interacting with COVID-19 positive patients or supporting basic public infrastructure during the pandemic is eligible. This includes:</p>
+						<ul class="text-white eligibility">
+							<li><b>Clinical Staff at Healthcare Facilities</b> </li>
+							<li class="description">Doctors, nurses, certified nursing assistants, and other staff</li>
+							<li><b>Non-Clinical Staff at Healthcare Facilities</b> </li>
+							<li class="description">Administrative assistants, janitors, and other staff</li>
+							<li><b>Essential Business Employees</b></li>
+							<li class="description">Grocery store employees, postal workers, and other professionals</li>
+							<li><b>Public Service Employees</b></li>
+							<li class="description">Police, firefighters, EMS, waste management, and other professionals</li>
+						</ul>
+						<p class="text-white-75 mt-5 mb-4">This is not a strict list. If you are unsure, please <a href="#contact" class="text-white">contact us</a>!</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="page-section" id="services">
+			<div class="container">
+				<h2 class="text-center mt-0">Teletherapy Services</h2>
+				<div class="row justify-content-center">
+					<div class="col-lg-10 text-center">
+						<hr class="divider dark my-4" />
+						<p class="mb-4">Teletherapy is therapy delivered through a virtual platform, such as live video or phone conferencing. </p>
+
+						<p>Teletherapy sessions will focus on managing the stress associated with the pandemic and will include emotional support, grounding techniques, coping strategies, and information on community resources. For more information on how teletherapy works and its benefits, here is a brief article:</p>
+						<p class="mb-4"><a href="https://positivepsychology.com/teletherapy/">What is Teletherapy & The Benefits of Online Therapy</a></p>
+
+						<b>NOTE:</b> If you are feeling suicidal or otherwise unable to keep yourself safe, please contact 911 or Re:Solve Crisis Services at 1-888-7-YOU-CAN (796-8226), or proceed to the nearest hospital emergency room.
+
+					</div>
+				</div>
+			</div>
+		</section>
+			
+		<section class="page-section bg-dark text-white" id="about">
+			<div class="container text-center">
+				<h2 class="mb-4">About Us</h2>
+				<hr class="divider light my-4" />
+				<p>Stuff</p>
+			</div>
+		</section>
+
+		<section class="page-section" id="contact">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 text-center">
+						<h2 class="mt-0">Contact</h2>
+						<hr class="divider my-4" />
+					</div>
+				</div>
+				<div class="row">
+          <div class="col-lg-4">
+            <div class="team-member team-member-primary">
+              <img class="mx-auto rounded-circle"  alt="" />
+              <h4>William Hasek</h4>
+              <p class="text-muted">Licensed Therapist<br><a href="mailto:Email">Email</a></p></p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+	          <div class="team-member">
+	              <img class="mx-auto rounded-circle"  alt="" />
+	              <h4>Andrew Kuznetsov</h4>
+	              <p class="text-muted">Site Development<br><a href="mailto:Email">Email</a></p></p>
+	          </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle"  alt="" />
+              <h4>Claire Wang</h4>
+              <p class="text-muted">Site Development<br>
+              	<a href="mailto:claire.w8808@gmail.com">claire.w8808@gmail.com</a></p>
+            </div>
+          </div>
+      	</div>
+				<div class="text-center mt-5">
+					<p>For questions about the effort, such as modifying or removing yourself from the provider listings, contact William.<br>
+					For questions about the website, contact Andrew or Claire.</p>
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<footer class="bg-light py-5">
+				<div class="container"><div class="small text-center text-muted">Copyright © 2020</div></div>
+		</footer>
+
+		<!-- Bootstrap core JS-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+		<!-- Third party plugin JS-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+		<!-- Core theme JS-->
+		<script src="js/scripts.js"></script>
+	</body>
+</html>

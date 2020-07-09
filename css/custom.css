@@ -1,0 +1,129 @@
+h1 {
+  font-family: sans-serif;
+}
+
+@font-face {
+  font-family: 'Arial', 'Merriweather Sans';
+  font-style: normal;
+  font-weight: 400;
+  unicode-range: U+30-39;
+}
+
+#hero-btns button {
+  width: 100%;
+  border-width: 4px;
+  border-radius: 2px !important;
+  margin-bottom: 3rem;
+}
+
+.eligibility {
+  list-style: none;
+}
+
+.eligibility li {
+  margin-top: 25px;
+}
+
+.description {
+  margin-top: 0 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.team-member {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.team-member img {
+  width: 14rem;
+  height: 14rem;
+  border: 0.5rem solid rgba(0, 0, 0, 0.1);
+}
+
+.team-member-primary img {
+  border: 0.75rem solid rgba(0, 0, 0, 0.1);
+}
+
+.team-member h4 {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+}
+
+.team-member-primary h4 {
+  font-weight: bold;
+}
+
+#providers {
+  width: 110%;
+  margin-left: -5%;
+  font-family: 'Arial';
+}
+
+#providers table { 
+  max-width: 100% !important;
+  table-layout: fixed !important;
+}
+
+#providers td {
+  word-wrap: break-word;
+}
+
+#tele-info li {
+  margin-bottom: 5px;
+}
+
+hr.light-gray {
+  border-color: #ddd;
+}
+
+/*#myTable {
+  font-family: sans-serif;
+}*/
+
+.clickable {
+  cursor: pointer;
+}
+
+.modal .modal-full-height.modal-top, .modal .modal-full-height.modal-bottom {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.modal .modal-dialog.modal-bottom {
+  bottom: 0;
+}
+
+.modal .modal-full-height.modal-bottom {
+  top: auto;
+  min-height: 0;
+}
+
+.modal .modal-full-height {
+  position: absolute;
+  right: 0;
+  /*left: 0;*/
+  margin: 0;
+}
+
+.modal.fade .model-dialog {
+  transition: transform .3s ease-out,-webkit-transform .3s ease-out;
+}
+
+.modal.show .modal-dialog {
+  -webkit-transform: none;
+  transform: none;
+}
+
+#addl-data {
+  padding-top: 20px;
+}
+
+#addl-data table {
+  font-family: sans-serif;
+}
+
+.highlight {
+  background: rgba(0, 0, 0, 0.075) !important;
+}

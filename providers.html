@@ -1,0 +1,479 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex" />
+    <title>Essential Pittsburgh Mental Health Network</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150391163-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-150391163-1');
+    </script>
+
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- Third party plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
+    <!-- Includes for Jquery DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3 bg-white" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="./index.html">Essential Pittsburgh Mental Health Network</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto my-2 my-lg-0">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./index.html#eligibility">Eligibility</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./index.html#services">Services</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./index.html#about">About</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="./index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <section class="page-section">
+      <div class="container">
+        <h2 class="text-center mt-0">Getting Help</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-10 text-center">
+            <hr class="divider dark my-4" />
+            
+            <div>
+              <p class="mb-4 text-left">Listed below are Pittsburgh therapists offering 1-4 sessions of free video or phone teletherapy for those on the frontlines of the COVID-19 pandemic. </p>
+
+              <p class="text-left">If you are not familiar with teletherapy and would like a brief walk-through of how to go about seeking help, click the button below.</p>
+
+              <a href="https://blog.zencare.co/teletherapy-guide-for-clients/" class="btn btn-primary mb-4" role="button" target="_blank">
+                Teletherapy How-To
+              </a>
+
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Teletherapy 101</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body text-left">
+                      Text description
+                      <ol>
+                        <li>hello</li>
+                        <li>hello</li>
+                        <li>Mention that you were sent from Mental Healthcare Response!</li>
+                      </ol>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="text-left">To learn more about how teletherapy works and its benefits, here is a brief article:</p>
+
+              <p><a href="https://positivepsychology.com/teletherapy/">What is Teletherapy & The Benefits of Online Therapy</a></p>
+              <br>
+            </div>
+
+            <hr class="divider my-4 light-gray" />
+
+            <div>
+              <ul class="text-left text-black-50" id="tele-info">
+                <li>The number of sessions offered will be negotiated between you and the therapist based on your needs. After your free sessions are completed, your therapist will work with you to find ongoing care if needed, helping you get set up with a provider who accepts your health insurance or who can offer affordable care if you don’t have health insurance.</li>
+
+                <li>Sessions will focus on managing the stress associated with the pandemic and will include emotional support, grounding techniques, coping strategies, and information on community resources. </li>
+
+                <li>Click on the therapist's name to learn more about their background and ways to get in contact (therapists will return your message within 24 hours). </li> 
+              </ul>
+            </div>
+
+            <hr class="divider my-4 light-gray" />
+
+            <div>
+              <p> <b>NOTE:</b> If you are feeling suicidal or otherwise unable to keep yourself safe, please contact 911 or Re:Solve Crisis Services at 1-888-7-YOU-CAN (796-8226), or proceed to the nearest hospital emergency room.
+              </p>
+            </div>
+
+            <h3 class="mt-5">Provider Directory</h3>
+            <p>Click on a row in the table to view additional contact information about that provider.</p> 
+            <div class="row table-responsive-lg mt-3" id="providers">
+              <table id="myTable" class="table table-bordered table-hover my-5"> 
+                <!--<thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th> 
+                        <th>Note</th>
+                        <th>Phone</th>
+                        <th>Website</th>
+                        <th>Email</th>
+                        <th>Profile Link</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>-->
+              </table>
+            </div>
+            <p class="mt-5 text-left">This content is best viewed on a desktop.</p>
+            <p>If you'd like to modify or remove yourself from the provider listings, <a href="./index.html#contact">contact William Hasek</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="modal fade bottom show" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalPreviewLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fluid modal-full-height modal-bottom" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalPreviewLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <footer class="fixed-bottom shadow-lg p-3 rounded bg-light invisible" id="addl-data">
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </footer>
+
+    <footer class="bg-light py-5">
+        <div class="container"><div class="small text-center text-muted">Copyright © 2020</div></div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+    <script>
+
+      /*
+        This (messy) function parses HTML from the public page of google spreadsheet (Which is roughly in spare format) 
+        into a spreadsheet array with appropriate empty cells (which requires filling in gaps).
+
+        NOTE this function currently makes assumptions such as:
+        - Every row must have data 
+        - Every row must have one unit of data on the last column
+        - The data is in the shape of a columns x rows rectangle of some sort
+      */
+
+      function parseHTMLData(data) {
+          console.log(data);
+          // Final results will be stored here  
+          var results = [];
+          console.log(results);
+
+          // Get all entries from spreadsheet
+          var entries = data.feed.entry;
+
+
+          //find max col number
+          max_row = 0;
+          max_col = 0;
+
+          for (var i = 1; i < entries.length; i++) {
+
+            var cell = entries[i];
+
+            var row = parseInt(cell.gs$cell.row);
+            var col = parseInt(cell.gs$cell.col);
+
+            if (row>max_row){
+              max_row = row;
+            }
+
+            if (col>max_col){
+              max_col = col;
+            }
+          } 
+
+          //find max row number
+
+          //unknown test by trying, +1 for fix, +1 for switch to 1 indexing on cell text
+          var modified_max_col = max_col + 2;
+          
+
+          // Set initial previous row, so we can check if the data in the current cell is from a new row
+          var previousRow = 0;
+          var col_index = 1;
+          // Iterate all entries in the spreadsheet
+          for (var i = 1; i < entries.length; i++) {
+              // check what was the latest row we added to our result array, then load it to local variable
+              var latestRow = results[results.length - 1];
+
+              // get current cell
+              var cell = entries[i];
+
+              // get text from current cell
+              var text = cell.content.$t;
+
+              // get the current row
+              var row = cell.gs$cell.row;
+              var col = parseInt(cell.gs$cell.col);
+              
+
+              // All of this assumes we won't need to do the fill in on the first column, which by making sure our last column is always full we can avoid. Can be fixed 
+
+              // Determine if the current cell is in the latestRow or is a new row
+              if (row > previousRow) {
+                  // this is a new row, create new array for this row
+                  var newRow = [];
+
+                  // add the cell text to this new row array  
+                  newRow.push(text);
+
+                  // store the new row array in the final results array
+                  results.push(newRow);
+
+                  // Increment the previous row, since we added a new row to the final results array
+                  previousRow++;
+
+                  //NEW reset row index;
+
+                  // Strange and is done to pair with code flow / how subarrays are formed.
+                  col_index = 2;
+              } else {
+                  // This cell is in an existing row we already added to the results array, add text to this existing row
+
+
+                  // We walk through everything sequentially
+                  // Two cases, either we are at the correct index and we add the text and increment
+                  if(col == col_index){
+                    latestRow.push(text);
+                    col_index++;
+                  }
+                  // Or we read something surprising, realize we need to 'catch' up with nulls, catch up while incrementing, then insert and +1. Note this is not the new 'row' surprising case.
+                  else{
+
+                    var difference = col-col_index+1;
+                    for(var y = 0; y<(difference-1);y++){
+
+                      latestRow.push(null);
+
+                      col_index+=1;
+                    }
+                    latestRow.push(text);
+                    col_index+=1;
+                  }
+              }
+
+          }
+
+          // remove the header row
+          results.shift();
+          // This is done this way to fix an async issue. Results are passed off for handling here to ensure everything is loaded.
+          handleResults(results);
+
+      }
+
+
+      // Parses header row and sets up reverse index for columns
+      function parseHeaderRow(spreadsheetArray){
+        spreadsheetDataColumns = spreadsheetArray[0];
+        // Create the reverse index
+        for (var i=0; i<spreadsheetDataColumns.length; i++){
+          spreadsheetDataColumnsReverseIndex[spreadsheetDataColumns[i]] = i;
+        }
+      }
+
+
+      /* 
+        Loops through all cells of a specific column.
+      */
+      function loopThroughColumn(spreadsheetArray, columnName){
+
+        var allValuesFromColumn = [];
+        var columnIdx = spreadsheetDataColumnsReverseIndex[columnName];
+
+        for (var i=0; i<spreadsheetArray.length; i++){
+          var cellValue = spreadsheetArray[i][columnIdx];
+          allValuesFromColumn.push(cellValue);
+        }
+
+        //Doing something with them
+        console.log(allValuesFromColumn);
+      }
+
+
+
+      /*
+        Loops through parsed spreadSheetArray row by row.
+      */
+      function loopThroughRows(spreadsheetArray){
+        // row_idx starts at 1 to skip header row
+        for (var row_idx=1; row_idx<max_row; row_idx++){
+          var row_data = spreadsheetArray[row_idx];
+          
+          /*
+            Easiest way to access data
+            let columnName = 'whatever name';
+            let cellData = row_data[spreadsheetDataColumnsReverseIndex[columnName]];
+          */
+
+        }
+      }
+
+      function grabCols(spreadsheetArray, cols) {
+        var outSheet = [];
+        for (var row_idx = 0; row_idx < spreadsheetArray.length; row_idx++){
+          var row = spreadsheetArray[row_idx];
+          var newrow = [];
+          for (var i = 0; i < cols.length; i++) {
+            newrow.push(row[cols[i]]);
+          }
+          outSheet.push(newrow);
+        }
+        return outSheet;
+      }
+
+      function format(d) {
+        // `d` is the original data object for the row
+        var fstr = '<div class="text-center">';
+        fstr += '<button type="button" id="close-footer" class="close" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>';
+        fstr += '<h3>' + d[0] + '</h3>';
+        fstr += '<i>' + d[3] + '</i><br><br>';
+        fstr += '<div class="row justify-content-center">';
+        fstr += '<div class="md-6 mx-3">';
+        fstr += '<table class="table table-responsive">'
+
+        fstr += '<tr><th>Phone</th><th>' + d[2] + '</th></tr>' 
+
+        if (d[5] != null)
+          fstr += '<tr><th>Email</th><th><a href="mailto:' + d[5] + '">' + d[5] + '</a></th></tr>';
+        else
+          fstr += '<tr><th>Email</th><th><i>No email listed</i></th></tr>';
+        fstr += '</table></div>';
+        fstr += '<div class="md-6 mx-3">';
+        fstr += '<table class="table table-responsive">';
+
+        if (d[4] != null)
+          fstr += '<tr><th><a href="' + d[4] + '">Website</a></th></tr>';
+        else
+          fstr += '<tr><th><i>No website listed</i></th></tr>';
+
+        if (d[6] != null)
+          fstr += '<tr><th><a href="' + d[6] + '">Online Profile</a></th></tr>';
+        else
+          fstr += '<tr><th><i>No online profile listed</i></th></tr>'; 
+            
+        fstr += '</table></div></div></div>';
+        return fstr;
+      }
+      
+      var selectedRow;
+      /*
+        This function executes after data is loaded.
+      */
+      function handleResults(spreadsheetArrayInput) {
+
+          // Need to parse headers
+          // parseHeaderRow(spreadsheetArray);
+          // loopThroughColumn(spreadsheetArray, 'Name' );
+          var spreadsheetArray = grabCols(spreadsheetArrayInput, [0, 1, 2, 6, 3, 4, 5]);
+          // var spreadsheetArray = spreadsheetArrayInput;
+          console.log(spreadsheetArray);
+
+          // Load Jquery DataTable
+          $(document).ready( function () {
+              // Multiple version of JQuery may be loaded, below is a hotfix.
+              var table = $('#myTable').DataTable({
+                data: spreadsheetArray,
+                columns: [
+                  { title: "Name", className: "clickable" },
+                  { title: "Note", className: "clickable" },
+                  { title: "Phone", className: "clickable" },
+                  { title: "Category", className: "clickable" }
+                ]
+              });
+
+              /* Show detail functionality */
+              $('#myTable tbody').on('click', 'tr', function() {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                if (selectedRow != null && selectedRow.hasClass('highlight'))
+                  selectedRow.removeClass('highlight');
+                $(this).addClass('highlight');
+                selectedRow = $(this);
+                $('#addl-data').html(format(row.data()));
+                $('#addl-data').removeClass('invisible');
+
+                $('#close-footer').on('click', function() {
+                  $('#addl-data').addClass('invisible');
+                  selectedRow.removeClass('highlight');
+                });
+              });
+          } );
+
+          /*
+            Sample functions to call
+          loopThroughRows(spreadsheetArray);
+          console.log(spreadsheetDataColumns);
+          console.log(spreadsheetDataColumnsReverseIndex);
+          */
+
+      }
+
+      /*
+        Function to load google sheets json.
+        Note on how this works:
+          - The parseHTMLData function is created with data as a parameter
+          - The name of the function (parseHTMLData) is passed in the GET call
+          - (From my understanding) the function is passed as json?
+          - It works!
+      */
+      function load_google_sheets_json(sheet_key){
+        let callbackName = "parseHTMLData";
+        var spreadsheetUrl = "https://spreadsheets.google.com/feeds/cells/" + sheet_key + "/1/public/values?alt=json-in-script&callback=" + callbackName;
+        $.ajax({
+            url: spreadsheetUrl,
+            jsonp: 'jsonp',
+            dataType: 'jsonp'
+        });
+      }
+
+
+      // Init
+      (function() {
+         // Initialization of column names and a reverse index for finding indexes by name 
+         var spreadsheetDataColumns = [];
+         var spreadsheetDataColumnsReverseIndex = {};
+         // var spreadsheetArray = [];
+         // Load data from Google Spreadsheet key from url
+         var sheet_key = "1-hOEGaLhBmvqnuMd9OE4J6QfiQLnxwQBhKavMIl8jHg";
+         load_google_sheets_json(sheet_key);
+
+      })();
+
+
+
+    </script>
+
+  </body>
+</html>
